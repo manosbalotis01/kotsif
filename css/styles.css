@@ -359,10 +359,10 @@ main { flex: 1; }
 }
 .contact-form button:hover { background: #e6e4df; transform: translateY(-2px); }
 
-/* ======== RESPONSIVE CLEAN ======== */
+/* ======== RESPONSIVE (MOBILE ≤ 900px) ======== */
 @media (max-width: 900px) {
 
-  /* Header κατοπτρικό */
+  /* --- Header κατοπτρικό --- */
   .site-nav, .lang-switch { display: none; }
   .menu-toggle { display: flex; margin-left: auto; }
   .site-header .container {
@@ -372,26 +372,15 @@ main { flex: 1; }
     padding: 1rem 1.2rem;
   }
 
-  /* Hero ίδιες εικόνες */
+  /* --- Hero (ίδιες εικόνες στο mobile) --- */
   .about-hero { background-image: var(--about-bg); }
   .contact-hero { background-image: var(--hero-bg); }
 
-  /* About απλή στοίχιση */
+  /* --- About --- */
   .about-grid { grid-template-columns: 1fr; }
   .about-image { display: none; }
 
-  /* Contact: διατηρεί το desktop layout */
-  .contact-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-  }
-}
-
-
-/* ======== MOBILE CONTACT FORM BELOW TEXT (REVERSED ORDER) ======== */
-@media (max-width: 900px) {
-
-  /* --- Αντιστροφή διάταξης: πρώτα φόρμα, μετά το κείμενο --- */
+  /* --- Contact (φόρμα κάτω από το κείμενο) --- */
   .contact-grid {
     display: flex;
     flex-direction: column-reverse;
@@ -399,15 +388,11 @@ main { flex: 1; }
     gap: 2.5rem;
     padding: 0 1rem;
   }
-
-  /* --- Φόρμα επικοινωνίας --- */
   .contact-form {
     order: 1;
     width: 100%;
     max-width: 500px;
   }
-
-  /* --- Κείμενο ("Ας μιλήσουμε") κάτω από τη φόρμα --- */
   .contact-text {
     order: 2;
     text-align: center;
@@ -415,20 +400,6 @@ main { flex: 1; }
     color: #f8f7f4;
     padding-top: 1rem;
   }
-
-  .contact-text h2 {
-    font-size: 2rem;
-    margin-bottom: 1rem;
-    font-weight: 700;
-  }
-
-  .contact-text p {
-    font-size: 1.1rem;
-    line-height: 1.8;
-    color: #f8f7f4;
-  }
-
-  /* --- Αφαίρεση outline στα πεδία --- */
   .contact-form input,
   .contact-form textarea {
     outline: none !important;
@@ -439,65 +410,35 @@ main { flex: 1; }
     color: #f8f7f4;
     caret-color: #f8f7f4;
   }
-
   .contact-form input:focus,
   .contact-form textarea:focus {
     border-bottom: 2px solid #f8f7f4;
   }
 
-  .contact-form label {
-    color: #bcbab7;
-    transition: all 0.25s ease;
-  }
-
-  .contact-form button {
-    align-self: center;
-    background: #f8f7f4;
-    color: #08100C;
-    border: none;
-    padding: 0.9rem 2rem;
-    border-radius: 30px;
-    font-weight: 600;
-    transition: background 0.3s ease, transform 0.2s ease;
-  }
-
-  .contact-form button:hover {
-    background: #e6e4df;
-    transform: translateY(-2px);
-  }
-}
-
-
-/* ======== MOBILE GALLERY: STATIC OUTLINE, NO INTERACTION ======== */
-@media (max-width: 900px) {
-
+  /* --- Gallery (κάθετες εικόνες με ίδιο outline) --- */
   .gallery-grid {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.4rem; /* πολύ μικρό κενό */
+    gap: 0.4rem;
     width: 100%;
     padding: 0;
     margin: 0 auto;
   }
-
   .gallery-grid img {
     width: 100%;
     height: auto;
     max-width: 600px;
     object-fit: contain;
-    border: 1px solid rgba(248, 247, 244, 0.25); /* ίδιο outline με desktop */
-    border-radius: 0;
+    border: 1px solid rgba(248, 247, 244, 0.25);
     background: transparent;
     box-shadow: none;
     outline: none;
-    transition: none; /* απενεργοποιούμε όλα τα transitions */
-    pointer-events: none; /* καμία “αντίδραση” στο tap */
+    transition: none;
+    pointer-events: none;
     user-select: none;
     -webkit-user-drag: none;
   }
-
-  /* Δεν συμβαίνει τίποτα σε hover/tap/focus */
   .gallery-grid img:hover,
   .gallery-grid img:focus,
   .gallery-grid img:active {
