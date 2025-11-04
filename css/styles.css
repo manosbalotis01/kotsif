@@ -89,8 +89,8 @@ main { flex: 1; }
 
 /* ===== HERO BACKGROUNDS ===== */
 :root {
-  --hero-bg: url('../images/sample2.png');
-  --about-bg: url('../images/bio.png');
+  --hero-bg: url('/images/sample2.png');
+  --about-bg: url('/images/bio.png');
 }
 
 /* ===== HOME ===== */
