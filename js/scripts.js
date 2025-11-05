@@ -70,19 +70,32 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // === Parallax μόνο για desktop ===
-  if (!isMobile()) {
+  // === PARALLAX σε ΟΛΕΣ τις συσκευές (desktop + mobile) ===
+  function setupParallax() {
+    const heroes = document.querySelectorAll('.home-section, .gallery-section, .about-hero, .contact-hero');
+    if (!heroes.length) return;
+
+    const mqReduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (mqReduced.matches) return;
+
     let ticking = false;
-    window.addEventListener("scroll", () => {
+
+    function applyParallax() {
+      const offset = window.scrollY * 0.25;
+      heroes.forEach(h => {
+        h.style.backgroundPosition = `center -${offset}px`;
+      });
+      ticking = false;
+    }
+
+    function onScroll() {
       if (ticking) return;
       ticking = true;
-      requestAnimationFrame(() => {
-        const heroes = document.querySelectorAll(".home-section, .gallery-section, .about-hero, .contact-hero");
-        const offset = window.scrollY * 0.25;
-        heroes.forEach(h => (h.style.backgroundPosition = `center -${offset}px`));
-        ticking = false;
-      });
-    });
+      requestAnimationFrame(applyParallax);
+    }
+
+    applyParallax();
+    window.addEventListener('scroll', onScroll, { passive: true });
   }
 
   // === Απαγόρευση δεξιού κλικ / drag σε εικόνες ===
@@ -111,8 +124,49 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+
+
+// === Gallery Zoom Effect: από 0.8 → 1.0 όταν γίνει ορατή ή κατά το load ===
+function animateGallery() {
+  const images = document.querySelectorAll('.gallery-grid img');
+  if (!images.length) return;
+
+  const observer = new IntersectionObserver(
+    entries => {
+      entries.forEach(entry => {
+        const img = entry.target;
+        if (entry.isIntersecting) {
+          const delay = Math.random() * 200; // μικρή τυχαία καθυστέρηση
+          img.style.transitionDelay = `${delay}ms`;
+          img.classList.add('visible');
+        } else {
+          img.classList.remove('visible');
+          img.style.transitionDelay = '0ms';
+        }
+      });
+    },
+    { threshold: 0.15 }
+  );
+
+  images.forEach(img => {
+    img.classList.remove('visible');
+    observer.observe(img);
+
+    // ✅ Αν είναι ήδη ορατή κατά το load, ενεργοποίησέ την αμέσως
+    const rect = img.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+      const delay = Math.random() * 200;
+      img.style.transitionDelay = `${delay}ms`;
+      img.classList.add('visible');
+    }
+  });
+}
+
+  // === Εκκίνηση αρχικού animation + parallax ===
   fadeInHeroes();
+  setupParallax();
   moveUnderlineTo(document.querySelector('.site-nav a[data-page="home"]'));
+  animateGallery();
 
   // === Ενιαία διαχείριση πλοήγησης για όλα τα links ===
   function handleNavLinkClick(link) {
@@ -142,6 +196,8 @@ document.addEventListener("DOMContentLoaded", () => {
           main.innerHTML = initialHomeHTML;
           updateLanguage(currentLang);
           fadeInHeroes();
+          setupParallax();
+          animateGallery();
         }
         window.scrollTo({ top: 0, behavior: "smooth" });
         return;
@@ -152,11 +208,14 @@ document.addEventListener("DOMContentLoaded", () => {
         if (currentlyOnHome) {
           const target = document.getElementById("gallery");
           if (target) target.scrollIntoView({ behavior: "smooth" });
+          animateGallery();
           return;
         } else {
           main.innerHTML = initialHomeHTML;
           updateLanguage(currentLang);
           fadeInHeroes();
+          setupParallax();
+          animateGallery();
           const target = document.getElementById("gallery");
           setTimeout(() => {
             if (target) target.scrollIntoView({ behavior: "smooth" });
@@ -174,6 +233,8 @@ document.addEventListener("DOMContentLoaded", () => {
         main.innerHTML = html;
         window.scrollTo({ top: 0, behavior: "smooth" });
         fadeInHeroes();
+        setupParallax();
+        animateGallery();
       } catch (err) {
         console.error(err);
         main.innerHTML = "<p>Σφάλμα φόρτωσης περιεχομένου.</p>";
@@ -193,6 +254,8 @@ document.addEventListener("DOMContentLoaded", () => {
       main.innerHTML = initialHomeHTML;
       updateLanguage(currentLang);
       fadeInHeroes();
+      setupParallax();
+      animateGallery();
       const homeLink = document.querySelector('.site-nav a[data-page="home"]');
       document.querySelectorAll(".site-nav a[data-page]").forEach(l => l.classList.remove("active"));
       homeLink.classList.add("active");
