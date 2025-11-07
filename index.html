@@ -3,26 +3,21 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Manos Kotsifakis</title>
+  <title data-key="siteTitle">Manos Kotsifakis</title>
 
-  <!-- CSS -->
   <link rel="stylesheet" href="css/styles.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
 
-  <!-- JS -->
   <script src="js/scripts.js" defer></script>
 </head>
 
 <body>
-  <!-- ===== HEADER / NAVBAR ===== -->
   <header class="site-header">
     <div class="container">
-      <!-- Logo -->
       <a class="logo" href="#home" data-page="home">
         <img src="images/Blackbird_Pixel_Icon.png" alt="Manos Kotsifakis Logo">
       </a>
 
-      <!-- Desktop Navigation -->
       <nav class="site-nav">
         <ul>
           <li><a href="#home" data-page="home" data-key="navHome">ΑΡΧΙΚΗ</a></li>
@@ -32,7 +27,6 @@
         </ul>
       </nav>
 
-      <!-- Right side: Language + Social -->
       <div class="header-right">
         <div class="lang-switch">
           <span class="lang-option active" data-lang="EN">EN</span>
@@ -41,10 +35,10 @@
         </div>
 
         <div class="header-social">
-          <a href="https://www.instagram.com/manoskotsifakis?igsh=eXdrNWx2Y2pqbTJ0" aria-label="Instagram" rel="noopener" target="_blank">
+          <a href="https://www.instagram.com/manoskotsifakis" aria-label="Instagram" rel="noopener" target="_blank">
             <i class="fab fa-instagram"></i>
           </a>
-          <a href="https://www.linkedin.com/in/manos-kotsifakis-a5004738a?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" aria-label="LinkedIn" rel="noopener" target="_blank">
+          <a href="https://www.linkedin.com/in/manos-kotsifakis" aria-label="LinkedIn" rel="noopener" target="_blank">
             <i class="fab fa-linkedin"></i>
           </a>
           <a href="https://www.facebook.com/MKotsifArtworks" aria-label="Facebook" rel="noopener" target="_blank">
@@ -53,15 +47,11 @@
         </div>
       </div>
 
-      <!-- ✅ Mobile Hamburger Menu -->
       <div id="menuToggle" class="menu-toggle">
-        <span></span>
-        <span></span>
-        <span></span>
+        <span></span><span></span><span></span>
       </div>
     </div>
 
-    <!-- ✅ Fullscreen Navigation (Mobile Only) -->
     <nav id="fullscreenNav" class="fullscreen-nav">
       <ul>
         <li><a href="#home" data-page="home" data-key="navHome">ΑΡΧΙΚΗ</a></li>
@@ -75,25 +65,10 @@
         <span class="separator">|</span>
         <span class="lang-option" data-lang="GR">GR</span>
       </div>
-
-      <!-- ✅ Social links για mobile κάτω από τη γλώσσα -->
-      <div class="header-social-mobile">
-        <a href="https://www.instagram.com/manoskotsifakis?igsh=eXdrNWx2Y2pqbTJ0" aria-label="Instagram" target="_blank" rel="noopener">
-          <i class="fab fa-instagram"></i>
-        </a>
-        <a href="https://www.linkedin.com/in/manos-kotsifakis-a5004738a?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" aria-label="LinkedIn" target="_blank" rel="noopener">
-          <i class="fab fa-linkedin"></i>
-        </a>
-        <a href="https://www.facebook.com/MKotsifArtworks" aria-label="Facebook" target="_blank" rel="noopener">
-          <i class="fab fa-facebook-f"></i>
-        </a>
-      </div>
     </nav>
   </header>
 
-  <!-- ===== MAIN ===== -->
   <main>
-    <!-- HOME (full screen hero) -->
     <section id="home" class="home-section" aria-label="Home">
       <div class="home-overlay"></div>
       <div class="home-content">
@@ -103,31 +78,22 @@
       </div>
     </section>
 
-    <!-- GALLERY -->
     <section id="gallery" class="gallery-section" aria-label="Gallery">
       <h2 data-key="galleryTitle">Gallery</h2>
-      <div class="gallery-grid">
-        <img src="images/me.jpg" alt="Artwork 1">
-        <img src="images/sample.jpg" alt="Artwork 2">
-        <img src="images/sample1.png" alt="Artwork 3">
-        <img src="images/sample2.jpg" alt="Artwork 4">
-        <img src="images/me.jpg" alt="Artwork 5">
-        <img src="images/Blackbird_Pixel_Icon.png" alt="Artwork 6">
-      </div>
+      <div class="gallery-grid"></div>
     </section>
   </main>
 
-  <!-- ===== FOOTER ===== -->
   <footer class="site-footer">
     <div class="container">
       <div class="social-links">
-        <a href="https://www.instagram.com/manoskotsifakis?igsh=eXdrNWx2Y2pqbTJ0" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-        <a href="https://www.linkedin.com/in/manos-kotsifakis-a5004738a?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-        <a href="https://www.facebook.com/MKotsifArtworks" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://www.instagram.com/manoskotsifakis"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.linkedin.com/in/manos-kotsifakis"><i class="fab fa-linkedin"></i></a>
+        <a href="https://www.facebook.com/MKotsifArtworks"><i class="fab fa-facebook-f"></i></a>
       </div>
-      <p>&copy; 2025 Manos Kotsifakis. All rights reserved.</p>
-      <br>
-      <h6><p>Created By <a href="https://www.instagram.com/manos.balotis?igsh=azRobG1hMW84M2oy&utm_source=qr">Manos B.</a></p></h6>
+      <p>&copy; 2025 <span data-key="footerName">Manos Kotsifakis</span>. <span data-key="footerRights">Όλα τα δικαιώματα διατηρούνται.</span></p>
+      <p><span  data-key="footerCreatedBy">Δημιουργήθηκε από</span> <a href="https://www.instagram.com/manos.balotis">Manos B.</a></p>
+      
     </div>
   </footer>
 </body>
