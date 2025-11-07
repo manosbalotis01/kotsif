@@ -165,14 +165,9 @@ main { flex: 1; }
   width: auto;
   object-fit: contain;
   border: 1px solid rgba(248, 247, 244, 0.25);
-  box-shadow: 0 0 6px rgba(248, 247, 244, 0.1);
   transition: transform 0.3s ease, opacity 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
-.gallery-grid img:hover {
-  transform: scale(1.03);
-  border-color: rgba(248, 247, 244, 0.8);
-  box-shadow: 0 0 12px rgba(248, 247, 244, 0.35);
-}
+
 
 /* ===== FULLSCREEN MOBILE MENU ===== */
 .menu-toggle {
@@ -471,30 +466,45 @@ main { flex: 1; }
 /* ======== MOBILE GALLERY: STATIC OUTLINE, NO INTERACTION ======== */
 @media (max-width: 900px) {
 
+
   .gallery-grid {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.4rem; /* πολύ μικρό κενό */
-    width: 100%;
-    padding: 0;
-    margin: 0 auto;
+    width: 100vw;
+    min-height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+    gap: 0;
+    background: #08100C;
   }
 
   .gallery-grid img {
-    width: 100%;
-    height: auto;
-    max-width: 600px;
-    object-fit: contain;
-    border: 1px solid rgba(248, 247, 244, 0.25); /* ίδιο outline με desktop */
+    width: 100vw;          /* γεμίζει οριζόντια όλη την οθόνη */
+    height: auto;           /* προσαρμόζεται αυτόματα κάθετα */
+    max-height: 100vh;      /* δεν ξεπερνά το ύψος οθόνης */
+    object-fit: contain;    /* κρατά αναλογίες */
+    background-color: #000; /* για να μη φαίνεται “κενό” στις άκρες */
+    display: block;
+    margin: 0;
+    border: none;
     border-radius: 0;
-    background: transparent;
     box-shadow: none;
-    outline: none;
-    transition: none; /* απενεργοποιούμε όλα τα transitions */
-    pointer-events: none; /* καμία “αντίδραση” στο tap */
-    user-select: none;
-    -webkit-user-drag: none;
+  }
+
+  /* Απενεργοποιούμε hover / tap εφέ */
+  .gallery-grid img:hover,
+  .gallery-grid img:active {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+  /* Απενεργοποιούμε hover effects στο κινητό */
+  .gallery-grid img:hover,
+  .gallery-grid img:active {
+    transform: none;
+    opacity: 1;
   }
 
   /* Δεν συμβαίνει τίποτα σε hover/tap/focus */
@@ -505,7 +515,7 @@ main { flex: 1; }
     transform: none;
     opacity: 1;
   }
-}
+
 
 /* === GALLERY ΖΟΥΜ EFFECT (0.8 -> 1.0 smooth) === */
 .gallery-grid img {
@@ -601,3 +611,50 @@ main { flex: 1; }
 @media (max-width: 900px) {
   .header-right { display: none; }
 }
+
+/* === Αφαίρεση μπλε περιγράμματος (focus outline / box-shadow) === */
+input:focus,
+textarea:focus,
+select:focus,
+button:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Αν θέλεις να διατηρηθεί το δικό σου border-bottom */
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border-bottom: 2px solid #f8f7f4;
+}
+
+/* ===== ABOUT HERO (full-screen background όπως το Home) ===== */
+.about-hero {
+  position: relative;
+  width: 100%;
+  height: 100vh; /* 👉 πλήρης οθόνη */
+  background-image: var(--about-bg);
+  background-size: cover;
+  background-position: center 0;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #f8f7f4;
+  overflow: hidden;
+  transition: background-size 0.2s ease-out;
+}
+
+.about-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+}
+
+.about-content {
+  position: relative;
+  z-index: 1;
+  padding: 0 1rem;
+  animation: fadeInHero 1.2s ease forwards;
+}
+
