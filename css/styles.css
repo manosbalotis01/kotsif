@@ -1,5 +1,13 @@
 /* ===== RESET ===== */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+@font-face {
+  font-family: 'MyFont';
+  src: url('../font/Sinisuka.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
 html, body { height: 100%; scroll-behavior: smooth; }
 body {
   font-family: 'Manrope', sans-serif;
@@ -34,15 +42,27 @@ main { flex: 1; }
 }
 
 /* ===== LOGO ===== */
-.logo { display: flex; justify-content: flex-start; }
 .logo img {
   height: 60px;
   width: auto;
   object-fit: contain;
   filter: brightness(0) invert(1);
-  transition: transform 0.3s ease;
+  transition: opacity 0.3s ease;
 }
-.logo img:hover { transform: scale(1.05); }
+
+/* Κατάργηση hover scaling */
+.logo img:hover {
+  opacity: 0.85;
+  transform: none;
+}
+
+/* Σιγουρεύουμε ότι είναι ορατό παντού */
+@media (max-width: 900px) {
+  .logo img {
+    display: block;
+    height: 50px;
+  }
+}
 
 /* ===== NAVIGATION ===== */
 .site-nav { display: flex; justify-content: center; }
@@ -230,18 +250,85 @@ main { flex: 1; }
 /* ===== FOOTER ===== */
 .site-footer {
   background: #08100C;
-  border-top: 1px solid #1c2720;
-  padding: 2rem 0;
+  padding: 2.5rem 0 2rem;
   text-align: center;
   color: #bcbab7;
-  font-size: .95rem;
+  font-size: 0.9rem;
+  border-top: none;
 }
+
+/* Υπογραφή (εικόνα πάνω από τα social) */
+.site-footer img {
+  display: block;
+  margin: 0 auto 1.2rem;
+  height: 80px; 
+  width: auto;
+  filter: brightness(0) invert(1);
+  opacity: 0.9;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Ελαφρύ hover effect (προαιρετικό) */
+.site-footer img:hover {
+  opacity: 1;
+  transform: translateY(-2px);
+}
+
+/* Social links */
 .social-links {
-  display: flex; justify-content: center;
-  gap: 1rem; margin-bottom: .8rem;
+  display: flex;
+  justify-content: center;
+  gap: 1.2rem;
+  margin-bottom: 1rem;
 }
-.social-links a { color: #bcbab7; font-size: 1.4rem; transition: color .3s; }
+.social-links a {
+  color: #bcbab7;
+  font-size: 1.3rem;
+  transition: color 0.3s ease;
+}
 .social-links a:hover { color: #f8f7f4; }
+
+/* Κείμενα */
+.site-footer p {
+  margin: 0.3rem 0;
+  line-height: 1.5;
+}
+.site-footer a {
+  color: #f8f7f4;
+  text-decoration: none;
+  font-weight: 500;
+  transition: opacity 0.3s ease;
+}
+.site-footer a:hover {
+  opacity: 0.8;
+}
+
+/* Mobile adjustments */
+/* ===== MOBILE ===== */
+@media (max-width: 768px) {
+  .site-footer {
+    padding: 2.5rem 0 2rem;
+  }
+
+  /* Μεγαλύτερη υπογραφή στο mobile */
+  .site-footer img {
+    height: 70px; /* ⬆️ αυξημένο μέγεθος */
+    margin-bottom: 1.5rem;
+  }
+
+  .social-links {
+    gap: 1.4rem;
+    margin-bottom: 1rem;
+  }
+
+  .social-links a {
+    font-size: 1.4rem;
+  }
+
+  .site-footer p {
+    font-size: 0.9rem;
+  }
+}
 
 /* ===== ABOUT / CONTACT ===== */
 .about-hero, .contact-hero {
