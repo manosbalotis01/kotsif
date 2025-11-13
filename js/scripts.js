@@ -76,6 +76,10 @@ const langData = {
   }
 };
 
+// === Γλώσσα & gallery state (global) ===
+let currentLang = "EN";
+let galleryLoaded = false;
+
 // === Gallery Zoom Effect ===
 function animateGallery() {
   const images = document.querySelectorAll('.gallery-grid img');
@@ -111,35 +115,40 @@ function animateGallery() {
   });
 }
 
-// === GOOGLE DRIVE GALLERY (τελική σταθερή έκδοση με thumbnailLink) ===
+
+// === GOOGLE DRIVE GALLERY (τελική σταθερή έκδοση full-res) ===
 async function loadGalleryFromDrive() {
   const folderId = "1TRxcwdwln6c_KEQY5dq3uHFXViHj0EA7";
   const apiKey = "AIzaSyBckV-J09OMEWB8bFEadmEwLh3nYEnT7vE";
 
   try {
-   const res = await fetch(
-  `https://www.googleapis.com/drive/v3/files?q='${folderId}'+in+parents+and+(mimeType+contains+'image/')&fields=files(id,name,mimeType,thumbnailLink)&key=${apiKey}`
-);
-const data = await res.json();
+    const res = await fetch(
+      `https://www.googleapis.com/drive/v3/files?q='${folderId}'+in+parents+and+(mimeType+contains+'image/')&fields=files(id,name,mimeType,thumbnailLink)&key=${apiKey}`
+    );
+    const data = await res.json();
 
-const gallery = document.querySelector(".gallery-grid");
-if (!data.files || data.files.length === 0) {
-  gallery.innerHTML = `<p>${langData[currentLang].galleryEmpty}</p>`;
-  return;
-}
+    const gallery = document.querySelector(".gallery-grid");
+    if (!gallery) return;
 
-gallery.innerHTML = data.files.map(f => {
-  const imgUrl = `https://lh3.googleusercontent.com/d/${f.id}=s0`;
-  return `
-    <figure>
-      <img 
-        src="${imgUrl}" 
-        alt="${f.name}" 
-        loading="lazy"
-      >
-    </figure>
-  `;
-}).join("");
+    if (!data.files || data.files.length === 0) {
+      gallery.innerHTML = `<p>${langData[currentLang].galleryEmpty}</p>`;
+      return;
+    }
+
+    gallery.innerHTML = data.files
+      .map(f => {
+        const imgUrl = `https://lh3.googleusercontent.com/d/${f.id}=s0`;
+        return `
+          <figure>
+            <img 
+              src="${imgUrl}" 
+              alt="${f.name}" 
+              loading="lazy"
+            >
+          </figure>
+        `;
+      })
+      .join("");
 
     animateGallery();
   } catch (err) {
@@ -148,6 +157,15 @@ gallery.innerHTML = data.files.map(f => {
     if (gallery)
       gallery.innerHTML = "<p>Σφάλμα κατά τη φόρτωση των εικόνων από το Google Drive.</p>";
   }
+}
+
+// === helper: φόρτωσε gallery ΜΟΝΟ όταν χρειάζεται (Σενάριο Α) ===
+function ensureGalleryLoaded() {
+  const gallery = document.querySelector(".gallery-grid");
+  if (!gallery) return;
+  if (galleryLoaded) return;
+  loadGalleryFromDrive();
+  galleryLoaded = true;
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -182,7 +200,6 @@ document.addEventListener("DOMContentLoaded", () => {
   if (fullscreenNav) fullscreenNav.classList.remove("active");
 
   // === Γλώσσα ===
-  let currentLang = "EN";
   updateLanguage(currentLang);
 
   langOptions.forEach(option => {
@@ -194,7 +211,6 @@ document.addEventListener("DOMContentLoaded", () => {
       option.classList.add("active");
       updateLanguage(currentLang);
 
-      
       const activeLink = document.querySelector(".site-nav a.active");
       if (activeLink) setTimeout(() => moveUnderlineTo(activeLink), 100);
     });
@@ -202,10 +218,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // === PARALLAX ===
   function setupParallax() {
-    const heroes = document.querySelectorAll('.home-section, .gallery-section, .about-hero, .contact-hero');
+    const heroes = document.querySelectorAll(
+      ".home-section, .gallery-section, .about-hero, .contact-hero"
+    );
     if (!heroes.length) return;
 
-    const mqReduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const mqReduced = window.matchMedia("(prefers-reduced-motion: reduce)");
     if (mqReduced.matches) return;
 
     let ticking = false;
@@ -225,7 +243,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     applyParallax();
-    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener("scroll", onScroll, { passive: true });
   }
 
   // === Απαγόρευση δεξιού κλικ / drag σε εικόνες ===
@@ -238,7 +256,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // === Fade-in heroes ===
   function fadeInHeroes() {
-    const heroes = document.querySelectorAll(".home-section, .gallery-section, .about-hero, .contact-hero");
+    const heroes = document.querySelectorAll(
+      ".home-section, .gallery-section, .about-hero, .contact-hero"
+    );
     heroes.forEach(el => {
       el.style.transition = "none";
       el.style.opacity = "0";
@@ -260,10 +280,8 @@ document.addEventListener("DOMContentLoaded", () => {
   moveUnderlineTo(document.querySelector('.site-nav a[data-page="home"]'));
   animateGallery();
 
-  // === Φόρτωση gallery από Google Drive ===
-  if (document.querySelector(".gallery-grid")) {
-    loadGalleryFromDrive();
-  }
+  // === Αρχική φόρτωση gallery μόνο μία φορά ===
+  ensureGalleryLoaded();
 
   // === Ενιαία διαχείριση πλοήγησης ===
   function handleNavLinkClick(link) {
@@ -285,39 +303,38 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const currentlyOnHome = document.querySelector(".home-section") !== null;
 
+      // === HOME ===
       if (page === "home") {
         if (!currentlyOnHome) {
           main.innerHTML = initialHomeHTML;
+          galleryLoaded = false;          // νέα home DOM → επιτρέπουμε νέο load
           updateLanguage(currentLang);
           fadeInHeroes();
           setupParallax();
           animateGallery();
-          if (document.querySelector(".gallery-grid")) {
-            loadGalleryFromDrive();
-          }  
+          ensureGalleryLoaded();
         }
         window.scrollTo({ top: 0, behavior: "smooth" });
         return;
       }
 
+      // === GALLERY ===
       if (page === "gallery") {
         if (currentlyOnHome) {
+          // Ήδη στο home → ΜΟΝΟ scroll, ΟΧΙ νέο load
           const target = document.getElementById("gallery");
           if (target) target.scrollIntoView({ behavior: "smooth" });
           animateGallery();
-          if (document.querySelector(".gallery-grid")) {
-            loadGalleryFromDrive();
-          }  
           return;
         } else {
+          // Ερχόμαστε από about/contact → ξαναστήνουμε home + gallery
           main.innerHTML = initialHomeHTML;
+          galleryLoaded = false;
           updateLanguage(currentLang);
           fadeInHeroes();
           setupParallax();
           animateGallery();
-          if (document.querySelector(".gallery-grid")) {
-            loadGalleryFromDrive();
-          }  
+          ensureGalleryLoaded();
           const target = document.getElementById("gallery");
           setTimeout(() => {
             if (target) target.scrollIntoView({ behavior: "smooth" });
@@ -326,6 +343,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }
 
+      // === ABOUT / CONTACT (φόρτωση ξεχωριστού HTML) ===
       try {
         main.innerHTML = '<div class="loading">Φόρτωση...</div>';
         const res = await fetch(`${page}.html`, { cache: "no-store" });
@@ -336,7 +354,7 @@ document.addEventListener("DOMContentLoaded", () => {
         window.scrollTo({ top: 0, behavior: "smooth" });
         fadeInHeroes();
         setupParallax();
-        animateGallery();
+        animateGallery();   // αν έχει gallery σε άλλη σελίδα (τώρα όχι)
       } catch (err) {
         console.error(err);
         main.innerHTML = "<p>Σφάλμα φόρτωσης περιεχομένου.</p>";
@@ -348,21 +366,25 @@ document.addEventListener("DOMContentLoaded", () => {
     handleNavLinkClick(link);
   });
 
+  // === Logo → πάντα επιστροφή στο home layout ===
   if (logoLink) {
     logoLink.addEventListener("click", e => {
       e.preventDefault();
       main.innerHTML = initialHomeHTML;
+      galleryLoaded = false;
       updateLanguage(currentLang);
       fadeInHeroes();
       setupParallax();
       animateGallery();
-      if (document.querySelector(".gallery-grid")) {
-  loadGalleryFromDrive();
-}
+      ensureGalleryLoaded();
       const homeLink = document.querySelector('.site-nav a[data-page="home"]');
-      document.querySelectorAll(".site-nav a[data-page]").forEach(l => l.classList.remove("active"));
-      homeLink.classList.add("active");
-      moveUnderlineTo(homeLink);
+      document
+        .querySelectorAll(".site-nav a[data-page]")
+        .forEach(l => l.classList.remove("active"));
+      if (homeLink) {
+        homeLink.classList.add("active");
+        moveUnderlineTo(homeLink);
+      }
       window.scrollTo({ top: 0, behavior: "smooth" });
       if (menuToggle && fullscreenNav) {
         menuToggle.classList.remove("active");
@@ -371,6 +393,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // === Mobile menu toggle ===
   if (menuToggle && fullscreenNav) {
     menuToggle.addEventListener("click", () => {
       menuToggle.classList.toggle("active");
