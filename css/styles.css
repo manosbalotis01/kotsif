@@ -8,6 +8,11 @@
   font-style: normal;
   font-display: swap;
 }
+
+.english-hero-font {
+  font-family: "MyFont", sans-serif;
+}
+
 html, body { height: 100%; scroll-behavior: smooth; }
 body {
   font-family: 'Manrope', sans-serif;
@@ -348,7 +353,7 @@ main { flex: 1; }
 .contact-hero { background-image: var(--hero-bg); }
 .about-overlay, .contact-overlay {
   position: absolute; inset: 0;
-  background: rgba(0,0,0,0.45);
+  background:#08100C;
 }
 .about-content, .contact-content {
   position: relative; z-index: 1;
@@ -571,7 +576,7 @@ main { flex: 1; }
     height: auto;           /* προσαρμόζεται αυτόματα κάθετα */
     max-height: 100vh;      /* δεν ξεπερνά το ύψος οθόνης */
     object-fit: contain;    /* κρατά αναλογίες */
-    background-color: #000; /* για να μη φαίνεται “κενό” στις άκρες */
+    background-color: #08100C;/* για να μη φαίνεται “κενό” στις άκρες */
     display: block;
     margin: 0;
     border: none;
@@ -744,4 +749,3 @@ button:focus {
   padding: 0 1rem;
   animation: fadeInHero 1.2s ease forwards;
 }
-
