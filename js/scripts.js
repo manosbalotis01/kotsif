@@ -25,7 +25,11 @@ const langData = {
     contactTitle: "Επικοινωνία",
     contactSubtitle: "Μη διστάσεις να επικοινωνήσεις για συνεργασία ή απορίες σχετικά με το έργο μου.",
     contactHeading: "Ας μιλήσουμε.",
-    contactText: "Ένα μήνυμα μπορεί να γίνει η αρχή μιας δημιουργικής συνεργασίας.",
+    contactText:
+      "Μη διστάσεις να επικοινωνήσεις για συνεργασία ή απορίες σχετικά με το έργο μου. " +
+      "Μπορείς να συμπληρώσεις τη διπλανή φόρμα ή να στείλεις απευθείας e-mail εδώ: " +
+      "<a href='mailto:manoskotsif@gmail.com'>manoskotsif@gmail.com</a>",
+    
     formFirstName: "Όνομα",
     formLastName: "Επώνυμο",
     formEmail: "Email",
@@ -61,9 +65,13 @@ const langData = {
 
     // --- Contact ---
     contactTitle: "Contact",
-    contactSubtitle: "Don’t hesitate to reach out for collaborations or questions about my work.",
+    contactSubtitle: "Feel free to reach out for collaborations or questions about my work.",
     contactHeading: "Let's talk.",
-    contactText: "A message can be the start of a creative collaboration.",
+    contactText:
+      "Feel free to reach out for collaborations or questions about my work. " +
+      "You can fill in the form or send an e-mail directly here: " +
+      "<a href='mailto:manoskotsif@gmail.com'>manoskotsif@gmail.com</a>",
+
     formFirstName: "First Name",
     formLastName: "Last Name",
     formEmail: "Email",
@@ -420,8 +428,29 @@ document.addEventListener("DOMContentLoaded", () => {
 function updateLanguage(lang) {
   document.querySelectorAll("[data-key]").forEach(el => {
     const key = el.getAttribute("data-key");
-    if (langData[lang] && langData[lang][key]) {
+
+    // HTML allowed keys
+    const htmlKeys = ["contactText"];
+
+    // Ενημέρωση κειμένου
+    if (htmlKeys.includes(key)) {
+      el.innerHTML = langData[lang][key];
+    } else {
       el.textContent = langData[lang][key];
+    }
+
+    // === NEW PART: ειδικό font για τα hero EN ===
+    const englishHeroKeys = [
+      "heroTitle",
+      "galleryTitle",
+      "aboutTitle",
+      "contactTitle"
+    ];
+
+    if (lang === "EN" && englishHeroKeys.includes(key)) {
+      el.classList.add("english-hero-font");
+    } else {
+      el.classList.remove("english-hero-font");
     }
   });
 }
