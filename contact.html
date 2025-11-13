@@ -2,6 +2,9 @@
   <div class="contact-overlay"></div>
   <div class="contact-content">
     <h1 data-key="contactTitle">Επικοινωνία</h1>
+    <p data-key="contactSubtitle">
+      
+    </p>
   </div>
 </section>
 
@@ -9,23 +12,26 @@
   <div class="container contact-grid">
     <div class="contact-text">
       <h2 data-key="contactHeading">Ας μιλήσουμε.</h2>
-      <p data-key="contactText">Ένα μήνυμα μπορεί να γίνει η αρχή μιας δημιουργικής συνεργασίας.</p>
+      <p data-key="contactText">
+        Ένα μήνυμα μπορεί να γίνει η αρχή μιας δημιουργικής συνεργασίας.
+      </p>
     </div>
+
     <div class="contact-form-container">
-      <form class="contact-form">
+      <form id="contactForm" class="contact-form">
         <div class="form-row">
           <div class="form-group">
-            <input type="text" id="firstName" name="firstName" required placeholder=" " />
+            <input type="text" id="firstName" name="from_name" required placeholder=" " />
             <label for="firstName" data-key="formFirstName">Όνομα</label>
           </div>
           <div class="form-group">
-            <input type="text" id="lastName" name="lastName" required placeholder=" " />
+            <input type="text" id="lastName" name="last_name" required placeholder=" " />
             <label for="lastName" data-key="formLastName">Επώνυμο</label>
           </div>
         </div>
 
         <div class="form-group">
-          <input type="email" id="email" name="email" required placeholder=" " />
+          <input type="email" id="email" name="from_email" required placeholder=" " />
           <label for="email" data-key="formEmail">Email</label>
         </div>
 
@@ -36,6 +42,50 @@
 
         <button type="submit" data-key="formButton">Αποστολή</button>
       </form>
+
+      <p id="form-status" class="form-status"></p>
     </div>
   </div>
 </section>
+
+<!-- === EmailJS === -->
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script>
+  (function () {
+    emailjs.init("d6xNdb0dJEtVERpt-"); // Public Key
+  })();
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("contactForm");
+    const status = document.getElementById("form-status");
+
+    if (!form) return;
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      status.textContent = "Αποστολή...";
+      status.style.color = "#aaa";
+
+      emailjs.sendForm("service_8iyejwl", "template_e9xf7xm", this)
+        .then(() => {
+          status.textContent = "✅ Το μήνυμα στάλθηκε επιτυχώς!";
+          status.style.color = "#7FFF7F";
+          form.reset();
+        })
+        .catch((err) => {
+          console.error("EmailJS error:", err);
+          status.textContent = "❌ Παρουσιάστηκε σφάλμα. Δοκίμασε ξανά.";
+          status.style.color = "#FF7F7F";
+        });
+    });
+  });
+</script>
+
+<style>
+  .form-status {
+    margin-top: 1rem;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    text-align: center;
+  }
+</style>
