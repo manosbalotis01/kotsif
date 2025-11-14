@@ -8,21 +8,15 @@
   </url>
 
   <url>
-    <loc>https://manosbalotis01.github.io/kotsif/#gallery</loc>
-    <changefreq>weekly</changefreq>
+    <loc>https://manosbalotis01.github.io/kotsif/about.html</loc>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://manosbalotis01.github.io/kotsif/#about</loc>
+    <loc>https://manosbalotis01.github.io/kotsif/contact.html</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-
-  <url>
-    <loc>https://manosbalotis01.github.io/kotsif/#contact</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.8</priority>
   </url>
 
 </urlset>
