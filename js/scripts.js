@@ -17,19 +17,22 @@ const langData = {
     // --- About σελίδα ---
     aboutTitle: "Σχετικά",
     aboutSubtitle: "Η τέχνη είναι τρόπος έκφρασης, παρατήρησης και σύνδεσης.",
-    aboutParagraph1: "Από τη ζωγραφική και τη φωτογραφία, έως την ψηφιακή τέχνη, δημιουργώ έργα που αντικατοπτρίζουν την έμπνευση και την αισθητική μου.",
-    aboutParagraph2: "Πιστεύω πως κάθε έργο αφηγείται μια ιστορία – άλλοτε δυναμικά, άλλοτε με σιωπή, πάντα με συναίσθημα.",
+    aboutParagraph1:
+      "Από τη ζωγραφική και τη φωτογραφία, έως την ψηφιακή τέχνη, δημιουργώ έργα που αντικατοπτρίζουν την έμπνευση και την αισθητική μου.",
+    aboutParagraph2:
+      "Πιστεύω πως κάθε έργο αφηγείται μια ιστορία – άλλοτε δυναμικά, άλλοτε με σιωπή, πάντα με συναίσθημα.",
     aboutBtn: "Εξερεύνησε το έργο μου",
 
     // --- Επικοινωνία ---
     contactTitle: "Επικοινωνία",
-    contactSubtitle: "Μη διστάσεις να επικοινωνήσεις για συνεργασία ή απορίες σχετικά με το έργο μου.",
+    contactSubtitle:
+      "Μη διστάσεις να επικοινωνήσεις για συνεργασία ή απορίες σχετικά με το έργο μου.",
     contactHeading: "Ας μιλήσουμε.",
     contactText:
       "Μη διστάσεις να επικοινωνήσεις για συνεργασία ή απορίες σχετικά με το έργο μου. " +
       "Μπορείς να συμπληρώσεις τη διπλανή φόρμα ή να στείλεις απευθείας e-mail εδώ: " +
       "<a href='mailto:manoskotsif@gmail.com'>manoskotsif@gmail.com</a>",
-    
+
     formFirstName: "Όνομα",
     formLastName: "Επώνυμο",
     formEmail: "Email",
@@ -59,13 +62,16 @@ const langData = {
     // --- About page ---
     aboutTitle: "About",
     aboutSubtitle: "Art is a form of expression, observation, and connection.",
-    aboutParagraph1: "From painting and photography to digital art, I create works that reflect my inspiration and aesthetics.",
-    aboutParagraph2: "I believe that every piece tells a story – sometimes boldly, sometimes silently, always with emotion.",
+    aboutParagraph1:
+      "From painting and photography to digital art, I create works that reflect my inspiration and aesthetics.",
+    aboutParagraph2:
+      "I believe that every piece tells a story – sometimes boldly, sometimes silently, always with emotion.",
     aboutBtn: "Explore my work",
 
     // --- Contact ---
     contactTitle: "Contact",
-    contactSubtitle: "Feel free to reach out for collaborations or questions about my work.",
+    contactSubtitle:
+      "Feel free to reach out for collaborations or questions about my work.",
     contactHeading: "Let's talk.",
     contactText:
       "Feel free to reach out for collaborations or questions about my work. " +
@@ -90,7 +96,7 @@ let galleryLoaded = false;
 
 // === Gallery Zoom Effect ===
 function animateGallery() {
-  const images = document.querySelectorAll('.gallery-grid img');
+  const images = document.querySelectorAll(".gallery-grid img");
   if (!images.length) return;
 
   const observer = new IntersectionObserver(
@@ -100,10 +106,10 @@ function animateGallery() {
         if (entry.isIntersecting) {
           const delay = Math.random() * 200;
           img.style.transitionDelay = `${delay}ms`;
-          img.classList.add('visible');
+          img.classList.add("visible");
         } else {
-          img.classList.remove('visible');
-          img.style.transitionDelay = '0ms';
+          img.classList.remove("visible");
+          img.style.transitionDelay = "0ms";
         }
       });
     },
@@ -111,18 +117,17 @@ function animateGallery() {
   );
 
   images.forEach(img => {
-    img.classList.remove('visible');
+    img.classList.remove("visible");
     observer.observe(img);
 
     const rect = img.getBoundingClientRect();
     if (rect.top < window.innerHeight && rect.bottom > 0) {
       const delay = Math.random() * 200;
       img.style.transitionDelay = `${delay}ms`;
-      img.classList.add('visible');
+      img.classList.add("visible");
     }
   });
 }
-
 
 // === GOOGLE DRIVE GALLERY (τελική σταθερή έκδοση full-res) ===
 async function loadGalleryFromDrive() {
@@ -163,11 +168,12 @@ async function loadGalleryFromDrive() {
     console.error("Σφάλμα φόρτωσης εικόνων:", err);
     const gallery = document.querySelector(".gallery-grid");
     if (gallery)
-      gallery.innerHTML = "<p>Σφάλμα κατά τη φόρτωση των εικόνων από το Google Drive.</p>";
+      gallery.innerHTML =
+        "<p>Σφάλμα κατά τη φόρτωση των εικόνων από το Google Drive.</p>";
   }
 }
 
-// === helper: φόρτωσε gallery ΜΟΝΟ όταν χρειάζεται (Σενάριο Α) ===
+// === helper: φόρτωσε gallery ΜΟΝΟ όταν χρειάζεται ===
 function ensureGalleryLoaded() {
   const gallery = document.querySelector(".gallery-grid");
   if (!gallery) return;
@@ -315,7 +321,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (page === "home") {
         if (!currentlyOnHome) {
           main.innerHTML = initialHomeHTML;
-          galleryLoaded = false;          // νέα home DOM → επιτρέπουμε νέο load
+          galleryLoaded = false;
           updateLanguage(currentLang);
           fadeInHeroes();
           setupParallax();
@@ -329,13 +335,11 @@ document.addEventListener("DOMContentLoaded", () => {
       // === GALLERY ===
       if (page === "gallery") {
         if (currentlyOnHome) {
-          // Ήδη στο home → ΜΟΝΟ scroll, ΟΧΙ νέο load
           const target = document.getElementById("gallery");
           if (target) target.scrollIntoView({ behavior: "smooth" });
           animateGallery();
           return;
         } else {
-          // Ερχόμαστε από about/contact → ξαναστήνουμε home + gallery
           main.innerHTML = initialHomeHTML;
           galleryLoaded = false;
           updateLanguage(currentLang);
@@ -362,7 +366,7 @@ document.addEventListener("DOMContentLoaded", () => {
         window.scrollTo({ top: 0, behavior: "smooth" });
         fadeInHeroes();
         setupParallax();
-        animateGallery();   // αν έχει gallery σε άλλη σελίδα (τώρα όχι)
+        animateGallery();
       } catch (err) {
         console.error(err);
         main.innerHTML = "<p>Σφάλμα φόρτωσης περιεχομένου.</p>";
@@ -385,7 +389,9 @@ document.addEventListener("DOMContentLoaded", () => {
       setupParallax();
       animateGallery();
       ensureGalleryLoaded();
-      const homeLink = document.querySelector('.site-nav a[data-page="home"]');
+      const homeLink = document.querySelector(
+        '.site-nav a[data-page="home"]'
+      );
       document
         .querySelectorAll(".site-nav a[data-page]")
         .forEach(l => l.classList.remove("active"));
@@ -429,17 +435,14 @@ function updateLanguage(lang) {
   document.querySelectorAll("[data-key]").forEach(el => {
     const key = el.getAttribute("data-key");
 
-    // HTML allowed keys
     const htmlKeys = ["contactText"];
 
-    // Ενημέρωση κειμένου
     if (htmlKeys.includes(key)) {
       el.innerHTML = langData[lang][key];
     } else {
       el.textContent = langData[lang][key];
     }
 
-    // === NEW PART: ειδικό font για τα hero EN ===
     const englishHeroKeys = [
       "heroTitle",
       "galleryTitle",
@@ -455,34 +458,36 @@ function updateLanguage(lang) {
   });
 }
 
-document.getElementById("contactForm").addEventListener("submit", async function(e) {
+// =====================================================
+// ✅ ΝΕΟΣ HANDLER ΓΙΑ ΤΗ ΦΟΡΜΑ – ΔΟΥΛΕΥΕΙ ΚΑΙ ΜΕ DYNAMIC LOAD
+// =====================================================
+document.addEventListener("submit", async function (e) {
+  const form = e.target;
+
+  // Τρέχουμε ΜΟΝΟ για τη φόρμα επικοινωνίας
+  if (form && form.id === "contactForm") {
     e.preventDefault();
 
-    const form = e.target;
     const formData = new FormData(form);
-
-    // Web3Forms endpoint
     const url = "https://api.web3forms.com/submit";
 
     try {
-        const response = await fetch(url, {
-            method: "POST",
-            body: formData
-        });
+      const response = await fetch(url, {
+        method: "POST",
+        body: formData
+      });
 
-        const result = await response.json();
+      const result = await response.json();
 
-        if (result.success) {
-            // Κρύβουμε τη φόρμα
-            form.classList.add("hidden");
-
-            // Δείχνουμε το animation ✔️
-            document.getElementById("successMessage").classList.remove("hidden");
-        } else {
-            alert("Κάτι πήγε στραβά. Προσπάθησε ξανά.");
-        }
-
+      if (result.success) {
+        form.classList.add("hidden");
+        const success = document.getElementById("successMessage");
+        if (success) success.classList.remove("hidden");
+      } else {
+        alert("Κάτι πήγε στραβά. Προσπάθησε ξανά.");
+      }
     } catch (error) {
-        alert("Σφάλμα δικτύου. Προσπάθησε ξανά αργότερα.");
+      alert("Σφάλμα δικτύου. Προσπάθησε ξανά αργότερα.");
     }
+  }
 });
