@@ -173,7 +173,6 @@ main { flex: 1; }
   margin-bottom: 2.5rem;
   color: #f8f7f4;
   letter-spacing: 1px;
-  text-transform: uppercase;
 }
 .gallery-grid {
   display: flex;
