@@ -11,8 +11,8 @@ const langData = {
     heroSubtitle: "Δημιουργικά οπτικά, τέχνη και έμπνευση.",
     heroBtn: "Δες το Gallery",
     galleryTitle: "Gallery",
-    galleryEmpty: "Δεν βρέθηκαν εικόνες στο Drive.",
-    galleryError: "Σφάλμα κατά τη φόρτωση των εικόνων από το Google Drive.",
+    galleryEmpty: "Δεν βρέθηκαν εικόνες.",
+    galleryError: "Σφάλμα κατά τη φόρτωση των εικόνων.",
 
     // --- About σελίδα ---
     aboutTitle: "Σχετικά",
@@ -56,8 +56,8 @@ const langData = {
     heroSubtitle: "Creative visuals, art and inspiration.",
     heroBtn: "View Gallery",
     galleryTitle: "Gallery",
-    galleryEmpty: "No images found in Drive.",
-    galleryError: "Error loading images from Google Drive.",
+    galleryEmpty: "No images found.",
+    galleryError: "Error loading images.",
 
     // --- About page ---
     aboutTitle: "About",
