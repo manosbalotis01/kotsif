@@ -454,3 +454,35 @@ function updateLanguage(lang) {
     }
   });
 }
+
+document.getElementById("contactForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const form = e.target;
+    const formData = new FormData(form);
+
+    // Web3Forms endpoint
+    const url = "https://api.web3forms.com/submit";
+
+    try {
+        const response = await fetch(url, {
+            method: "POST",
+            body: formData
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            // Κρύβουμε τη φόρμα
+            form.classList.add("hidden");
+
+            // Δείχνουμε το animation ✔️
+            document.getElementById("successMessage").classList.remove("hidden");
+        } else {
+            alert("Κάτι πήγε στραβά. Προσπάθησε ξανά.");
+        }
+
+    } catch (error) {
+        alert("Σφάλμα δικτύου. Προσπάθησε ξανά αργότερα.");
+    }
+});
