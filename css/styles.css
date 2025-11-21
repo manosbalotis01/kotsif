@@ -114,8 +114,8 @@ main { flex: 1; }
 
 /* ===== HERO BACKGROUNDS ===== */
 :root {
-  --hero-bg: url('../images/sample2.png');
-  --about-bg: url('../images/bio.png');
+  --hero-bg: url('kotsif/images/sample2.png');
+  --about-bg: url('kotsif/images/bio.png');
 }
 
 /* ===== HOME ===== */
