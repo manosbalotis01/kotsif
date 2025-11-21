@@ -18,30 +18,41 @@
     </div>
 
     <div class="contact-form-container">
-      <form id="contactForm" class="contact-form">
-        <div class="form-row">
-          <div class="form-group">
-            <input type="text" id="firstName" name="from_name" required placeholder=" " />
-            <label for="firstName" data-key="formFirstName">Όνομα</label>
-          </div>
-          <div class="form-group">
-            <input type="text" id="lastName" name="last_name" required placeholder=" " />
-            <label for="lastName" data-key="formLastName">Επώνυμο</label>
-          </div>
-        </div>
+      <form id="contactForm" class="contact-form" action="https://api.web3forms.com/submit" method="POST">
 
-        <div class="form-group">
-          <input type="email" id="email" name="from_email" required placeholder=" " />
-          <label for="email" data-key="formEmail">Email</label>
-        </div>
+  <!-- Web3Forms Access Key -->
+  <input type="hidden" name="access_key" value="0b625a5c-1433-4421-b418-7d939438993e" />
 
-        <div class="form-group">
-          <textarea id="message" name="message" required placeholder=" "></textarea>
-          <label for="message" data-key="formMessage">Μήνυμα</label>
-        </div>
+  <!-- Anti-spam honeypot -->
+  <input type="checkbox" name="botcheck" style="display: none;" />
 
-        <button type="submit" data-key="formButton">Αποστολή</button>
-      </form>
+  <!-- Optional Redirect after submit -->
+  <!-- <input type="hidden" name="redirect" value="https://yourdomain.com/thank-you.html" /> -->
+
+  <div class="form-row">
+    <div class="form-group">
+      <input type="text" id="firstName" name="first_name" required placeholder=" " />
+      <label for="firstName" data-key="formFirstName">Όνομα</label>
+    </div>
+
+    <div class="form-group">
+      <input type="text" id="lastName" name="last_name" required placeholder=" " />
+      <label for="lastName" data-key="formLastName">Επώνυμο</label>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <input type="email" id="email" name="email" required placeholder=" " />
+    <label for="email" data-key="formEmail">Email</label>
+  </div>
+
+  <div class="form-group">
+    <textarea id="message" name="message" required placeholder=" "></textarea>
+    <label for="message" data-key="formMessage">Μήνυμα</label>
+  </div>
+
+  <button type="submit" data-key="formButton">Αποστολή</button>
+</form>
 
       <p id="form-status" class="form-status"></p>
     </div>
