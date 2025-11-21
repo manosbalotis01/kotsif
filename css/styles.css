@@ -353,7 +353,7 @@ main { flex: 1; }
 .contact-hero { background-image: var(--contact-bg); }
 .about-overlay, .contact-overlay {
   position: absolute; inset: 0;
-  background:#08100C;
+  background: rgba(0,0,0,0.45);
 }
 .about-content, .contact-content {
   position: relative; z-index: 1;
