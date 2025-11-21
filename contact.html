@@ -18,85 +18,131 @@
     </div>
 
     <div class="contact-form-container">
-      <form id="contactForm" class="contact-form" action="https://api.web3forms.com/submit" method="POST">
+      <div id="formWrapper">
 
-  <!-- Web3Forms Access Key -->
-  <input type="hidden" name="access_key" value="0b625a5c-1433-4421-b418-7d939438993e" />
+  <form id="contactForm" class="contact-form">
+    <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE" />
+    <input type="checkbox" name="botcheck" style="display: none;" />
 
-  <!-- Anti-spam honeypot -->
-  <input type="checkbox" name="botcheck" style="display: none;" />
+    <div class="form-row">
+      <div class="form-group">
+        <input type="text" id="firstName" name="first_name" required placeholder=" " />
+        <label for="firstName" data-key="formFirstName">Όνομα</label>
+      </div>
 
-  <!-- Optional Redirect after submit -->
-  <!-- <input type="hidden" name="redirect" value="https://yourdomain.com/thank-you.html" /> -->
-
-  <div class="form-row">
-    <div class="form-group">
-      <input type="text" id="firstName" name="first_name" required placeholder=" " />
-      <label for="firstName" data-key="formFirstName">Όνομα</label>
+      <div class="form-group">
+        <input type="text" id="lastName" name="last_name" required placeholder=" " />
+        <label for="lastName" data-key="formLastName">Επώνυμο</label>
+      </div>
     </div>
 
     <div class="form-group">
-      <input type="text" id="lastName" name="last_name" required placeholder=" " />
-      <label for="lastName" data-key="formLastName">Επώνυμο</label>
+      <input type="email" id="email" name="email" required placeholder=" " />
+      <label for="email" data-key="formEmail">Email</label>
     </div>
+
+    <div class="form-group">
+      <textarea id="message" name="message" required placeholder=" "></textarea>
+      <label for="message" data-key="formMessage">Μήνυμα</label>
+    </div>
+
+    <button type="submit" data-key="formButton">Αποστολή</button>
+  </form>
+
+  <!-- Success animation container -->
+  <div id="successMessage" class="success-message hidden">
+    <div class="checkmark"></div>
+    <p>Το μήνυμα στάλθηκε!</p>
   </div>
 
-  <div class="form-group">
-    <input type="email" id="email" name="email" required placeholder=" " />
-    <label for="email" data-key="formEmail">Email</label>
-  </div>
-
-  <div class="form-group">
-    <textarea id="message" name="message" required placeholder=" "></textarea>
-    <label for="message" data-key="formMessage">Μήνυμα</label>
-  </div>
-
-  <button type="submit" data-key="formButton">Αποστολή</button>
-</form>
+</div>
 
       <p id="form-status" class="form-status"></p>
     </div>
   </div>
 </section>
 
-<!-- === EmailJS === -->
-<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 <script>
-  (function () {
-    emailjs.init("d6xNdb0dJEtVERpt-"); // Public Key
-  })();
+document.getElementById("contactForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
 
-  document.addEventListener("DOMContentLoaded", function () {
-    const form = document.getElementById("contactForm");
-    const status = document.getElementById("form-status");
+    const form = e.target;
+    const formData = new FormData(form);
 
-    if (!form) return;
+    // Web3Forms endpoint
+    const url = "https://api.web3forms.com/submit";
 
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-      status.textContent = "Αποστολή...";
-      status.style.color = "#aaa";
-
-      emailjs.sendForm("service_8iyejwl", "template_e9xf7xm", this)
-        .then(() => {
-          status.textContent = "✅ Το μήνυμα στάλθηκε επιτυχώς!";
-          status.style.color = "#7FFF7F";
-          form.reset();
-        })
-        .catch((err) => {
-          console.error("EmailJS error:", err);
-          status.textContent = "❌ Παρουσιάστηκε σφάλμα. Δοκίμασε ξανά.";
-          status.style.color = "#FF7F7F";
+    try {
+        const response = await fetch(url, {
+            method: "POST",
+            body: formData
         });
-    });
-  });
+
+        const result = await response.json();
+
+        if (result.success) {
+            // Κρύβουμε τη φόρμα
+            form.classList.add("hidden");
+
+            // Δείχνουμε το animation ✔️
+            document.getElementById("successMessage").classList.remove("hidden");
+        } else {
+            alert("Κάτι πήγε στραβά. Προσπάθησε ξανά.");
+        }
+
+    } catch (error) {
+        alert("Σφάλμα δικτύου. Προσπάθησε ξανά αργότερα.");
+    }
+});
 </script>
 
 <style>
-  .form-status {
-    margin-top: 1rem;
-    font-size: 0.95rem;
-    transition: all 0.3s ease;
-    text-align: center;
-  }
+  .hidden {
+  display: none;
+}
+
+.success-message {
+  text-align: center;
+  padding: 40px 20px;
+  animation: fadeIn 0.6s ease forwards;
+}
+
+.checkmark {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 4px solid #4CAF50;
+  margin: 0 auto 20px auto;
+  position: relative;
+  animation: scaleIn 0.4s ease-out forwards;
+}
+
+.checkmark::after {
+  content: "";
+  position: absolute;
+  left: 22px;
+  top: 10px;
+  width: 25px;
+  height: 50px;
+  border-right: 4px solid #4CAF50;
+  border-bottom: 4px solid #4CAF50;
+  transform: rotate(45deg);
+  animation: drawCheck 0.4s ease-out 0.2s forwards;
+  opacity: 0;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0.6); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes drawCheck {
+  from { opacity: 0; transform: rotate(45deg) scale(0.8); }
+  to { opacity: 1; transform: rotate(45deg) scale(1); }
+}
 </style>
