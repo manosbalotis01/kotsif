@@ -18,9 +18,10 @@ const langData = {
     aboutTitle: "Σχετικά",
     aboutSubtitle: "Η τέχνη είναι τρόπος έκφρασης, παρατήρησης και σύνδεσης.",
     aboutParagraph1:
-      "Από τη ζωγραφική και τη φωτογραφία, έως την ψηφιακή τέχνη, δημιουργώ έργα που αντικατοπτρίζουν την έμπνευση και την αισθητική μου.",
+      "Ο Μάνος Κοτσιφάκης εκκολάφτηκε και τιτιβίζει στο Ηράκλειο της Κρήτης από το 1987.",
     aboutParagraph2:
-      "Πιστεύω πως κάθε έργο αφηγείται μια ιστορία – άλλοτε δυναμικά, άλλοτε με σιωπή, πάντα με συναίσθημα.",
+      "Αφού έβγαλε τα πρώτα του πούπουλα έπεσε κατά λάθος σε ένα καζάνι γεμάτο ρακί και ο πατέρας του τον έκανε τουλούμι στο ξύλο με ένα τεύχος Αστερίξ. Από τότε κάνει πτήσεις στις καλλιτεχνίες και στον ξετσίπωτο  ρομαντισμό και κουτσουλάει παντού.",
+    aboutParagraph3: "Έχει ασχοληθεί με πολιτική γελοιογραφία και αθλητική καρικατούρα, δημιούργησε και συμμετείχε  σε κάμποσες αυτοεκδόσεις, είναι concept artist και character designer σε παιχνίδια για κινητά και επιτραπέζια.",
     aboutBtn: "Εξερεύνησε το έργο μου",
 
     // --- Επικοινωνία ---
@@ -63,9 +64,10 @@ const langData = {
     aboutTitle: "About",
     aboutSubtitle: "Art is a form of expression, observation, and connection.",
     aboutParagraph1:
-      "From painting and photography to digital art, I create works that reflect my inspiration and aesthetics.",
+      "Manos Kotsifakis was hatched and cheeped in Heraklion from the Island of Crete in 1987.",
     aboutParagraph2:
-      "I believe that every piece tells a story – sometimes boldly, sometimes silently, always with emotion.",
+      "After he developed his first feathers, accidentally he fell in a kettle full of raki (Cretan pomace brandy made from grapes) and then his father smacks his butt with an Asterix comic issue. Later, he flies to all kind of arts and shameless romance, throwing bird dropping everywhere.",
+    aboutParagraph3: "He’s been involved with political and athletic cartoons and caricatures, he created and took part in five self-published comic books, he was a concept artist and character designer for mobile and board games.",
     aboutBtn: "Explore my work",
 
     // --- Contact ---
