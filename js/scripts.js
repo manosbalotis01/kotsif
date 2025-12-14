@@ -16,7 +16,7 @@ const langData = {
 
     // --- About σελίδα ---
     aboutTitle: "Σχετικά",
-    aboutSubtitle: "Η τέχνη είναι τρόπος έκφρασης, παρατήρησης και σύνδεσης.",
+    aboutSubtitle: "",
     aboutParagraph1:
       "Ο Μάνος Κοτσιφάκης εκκολάφτηκε και τιτιβίζει στο Ηράκλειο της Κρήτης από το 1987.",
     aboutParagraph2:
